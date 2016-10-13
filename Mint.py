@@ -3,7 +3,7 @@ from copy import *
 
 class Mint:
 	""" 
-	Modulo int
+	Arithmetic object.
 	"""
 	
 	def __init__(self, value : int, mod : int):
@@ -11,6 +11,10 @@ class Mint:
 		self.mod = mod
 
 	def refresh(self):
+		"""
+		refresh the current value whith the modulo
+		must be called whenever the value has been changed 
+		"""
 		self.value = self.value % self.mod
 
 	def fast_exp(self,exp : int):
