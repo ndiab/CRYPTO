@@ -1,5 +1,5 @@
 import unittest
-from Euclide import *
+from Arith import *
 from Mint import *
 from RSA import *
 
