@@ -9,6 +9,10 @@ class RSA :
 
 	generates keys and can Encrypt, Decrypt integers
 	"""	
+
+	# define the bounds of the primary numbers generation
+	min_bound = 1000000	 	
+	max_bound = 1000000000
 	
 	def __init__(self):
 		self.p = 0
@@ -18,18 +22,18 @@ class RSA :
 		self.phi = 0
 		self.n = 0
 		self.generate_keys()
-
+		
 
 	def generate_keys(self):
 		"""
 		generates keys and set the RSA values
 		"""
 		# step 1 : chose random primary numbers p and q
-		n = generate_prime(100000,1000000000)# we chose only integers between 10e5 to 10e9	
+		n = generate_prime(self.min_bound,self.max_bound)
 		self.p = copy(n)
-		n = generate_prime(100000,1000000000)
+		n = generate_prime(self.min_bound,self.max_bound)
 		while(n == self.p):
-			n = generate_prime(100000,1000000000)
+			n = generate_prime(self.min_bound,self.max_bound)
 		self.q = copy(n)
 
 		#step 2 : compute n = pq

@@ -1,4 +1,5 @@
 from math import *
+from random import *
 
 def gcd(a, b):
 	"""
@@ -62,14 +63,14 @@ def generate_prime(mn : min, mx : int) -> int :
 		#	print("The chosen bounds are not valid")
 
 		#define the max try
-		r = 100 * (math.log2(mx)+1) 
+		r = 100 * (log2(mx)+1) 
 
 		n = randint(mn, mx)
 
 		while (not is_prime(n)) :
 			r = r-1
-			assert r>0 , "Tno prime number found in the selected interval"
+			assert r>0 , "no prime number found in the selected interval"
 			#except AssertionError:
-			#	print("Tno prime number found in the selected interval")
+			#	print("no prime number found in the selected interval")
 			n = randint(mn, mx)
 		return n
