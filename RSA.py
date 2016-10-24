@@ -11,8 +11,8 @@ class RSA :
 	"""	
 
 	# define the bounds of the primary numbers generation
-	min_bound = 1000000	 	
-	max_bound = 1000000000
+	min_bound = 1000000000000    #10e12	 	
+	max_bound = 1000000000000000 #10e15
 	
 	def __init__(self):
 		self.p = 0
@@ -50,5 +50,4 @@ class RSA :
 
 		#step 5 : compute d (private key)
 		self.d = euclide_algorithm(self.e, self.phi)["U"] % self.phi
-		
 
