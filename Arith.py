@@ -57,16 +57,12 @@ def Rabin_Miller(n : int) -> bool :
 	while (s%2 == 0) :
 		s = s//2
 		t = t+1
-	
 	#we keep the probability of a false result in k. The max bound of this probability is 2^-k
 	k = 0
-
 	while (k < 128) :
 		a = randint(2, n-1)
 		v = Mint(a,n) 
 		v.fast_exp(s)
-	
-		
 		if (v.value!= 1):
 			i = 0
 			while (v.value != n-1):
@@ -76,7 +72,6 @@ def Rabin_Miller(n : int) -> bool :
 					v.fast_exp(2)
 					i = i+1
 		k = k+2
-
 	return True
 
 def is_prime(n : int) -> bool :
