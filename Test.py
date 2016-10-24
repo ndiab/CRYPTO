@@ -2,6 +2,7 @@ import unittest
 from Arith import *
 from Mint import *
 from RSA import *
+from random import *
 
 
 
@@ -35,6 +36,16 @@ class RSATest(unittest.TestCase):
 		test = RSA()
 		ed = (test.e * test.d)% test.phi
 		self.assertEqual( 1, ed)
+
+	def test_encryption(self):
+		"""Test if the encryption works correctly"""
+		print("test encryption...")
+		test = RSA()
+		n = randint(1,100000)
+		a = test.encrypt(n)
+		b = test.decrypt(a)
+		self.assertEqual(n,b)
+		
 		
 
 if __name__ == '__main__' :

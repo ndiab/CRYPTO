@@ -51,3 +51,29 @@ class RSA :
 		#step 5 : compute d (private key)
 		self.d = euclide_algorithm(self.e, self.phi)["U"] % self.phi
 
+	def encrypt(self, message : int) -> int:
+		"""
+		RSA encryption
+		Entry : integer message
+		Return : message encrypted
+		"""
+		m = Mint(message,self.n)
+		m.fast_exp(self.e)
+		return m.value
+
+	def decrypt(self, cipher : int) -> int:
+		"""
+		RSA decryption
+		Entry : cipher	(integer)
+		Return : clear message (integer)
+		"""
+		c = Mint(cipher,self.n)
+		c.fast_exp(self.d)
+		return c.value
+		
+
+
+
+
+
+

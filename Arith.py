@@ -45,6 +45,11 @@ def euclide_algorithm (a: int, b: int) -> dict :
 	return { "PGCD":r1 , "U":u1 , "V":v1 }
 
 def Rabin_Miller(n : int) -> bool :
+	"""
+	Rabin Miller primality test
+	Entry : integer n
+	Return : boolean. True if n is prime.
+	"""
 	assert (n>=3) and (n%2 != 0), "Rabin Miller : Tested Value not correct"
 	#first, compute s and t such as s in odd and (2^t)*s = n-1
 	s = n-1
@@ -72,22 +77,19 @@ def Rabin_Miller(n : int) -> bool :
 					i = i+1
 		k = k+2
 
-	return True	
-
-
-
-
+	return True
 
 def is_prime(n : int) -> bool :
 	"""
-	naive primality test
+	Primality test
+	Entry : integer n
+	Return : boolean. True if n is prime.
 	"""
+	#first we look if it has trivial divisor.
 	for i in prime_tab:
 		if (n%i == 0):
 			return False
-	#for i in range(1223,n-1):
-	#	if  (n%i == 0):
-	#		return False
+	#Once we have eliminated the majority of solutions, we run the Rabin-Miller test to determinate if this integer is prime
 	return Rabin_Miller(n)
 
 def generate_prime(mn : min, mx : int) -> int :
