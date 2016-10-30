@@ -9,6 +9,7 @@ class Mint:
 	def __init__(self, value : int, mod : int):
 		self.value = value
 		self.mod = mod
+		self.refresh()
 
 	def refresh(self):
 		"""

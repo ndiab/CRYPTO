@@ -6,8 +6,8 @@ from random import *
 
 
 
-class EuclideTest(unittest.TestCase):
-	""" Test case used for test the Euclide's functions """
+class ArithTest(unittest.TestCase):
+	""" Test case used for test the Arithmetics functions """
 	
 	def test_euclide_algorithm(self):
 		""" Test if the euclide_algorithm working """
@@ -16,6 +16,14 @@ class EuclideTest(unittest.TestCase):
 		b = 165496
 		res = euclide_algorithm(a,b)
 		self.assertEqual({ "PGCD":4 , "U":-8109 , "V":32093182 } , res)
+
+	def test_CRT(self):
+		"""Test the Chiness Remainder Theorem"""
+		print("CRT test ... ")
+		a = Mint(3,7)
+		b = Mint(5,11)
+		x = CRT(a,b)
+		self.assertEqual((38,77),(x.value,x.mod))
 
 class MintTest(unittest.TestCase):
 	""" Test case used for test the Mint's functions """

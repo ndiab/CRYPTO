@@ -44,6 +44,17 @@ def euclide_algorithm (a: int, b: int) -> dict :
 	
 	return { "PGCD":r1 , "U":u1 , "V":v1 }
 
+def CRT(a : Mint, b : Mint) -> Mint :
+	"""
+	Chiness Remainder Theorem 
+	"""
+	r = euclide_algorithm(a.mod, b.mod)
+	u = r["U"]
+	v = r["V"]
+	x = (a.value * v * b.mod) + (b.value * u * a.mod)
+	m = Mint(x, a.mod * b.mod)
+	return m	
+
 def Rabin_Miller(n : int) -> bool :
 	"""
 	Rabin Miller primality test
