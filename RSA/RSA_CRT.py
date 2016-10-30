@@ -1,4 +1,5 @@
 from RSA import *
+from random import randint
 
 class RSA_CRT(RSA):
 	"""
@@ -9,7 +10,10 @@ class RSA_CRT(RSA):
 
 	def __init__(self, *args, **kwargs):
 		super(RSA_CRT, self).__init__(*args, **kwargs)
-		self.test = "tout est ok"
+		self.bellcore = False
+
+	def set_bellcore(self, b : bool):
+		self.bellcore = b
 
 	def decrypt(self, cipher : int) -> int :
 		"""
@@ -22,7 +26,12 @@ class RSA_CRT(RSA):
 		dp = self.d % (self.p - 1)
 		dq = self.d % (self.q - 1)
 		cp.fast_exp(dp)
-		cq.fast_exp(dq	)
+		cq.fast_exp(dq)
+		# Fault attack !
+		if(self.bellcore):
+			#We change the value of mp
+			n = randint(0,self.p)
+			cp.value = n
 		m = CRT(cp,cq)
 		return m.value
 		

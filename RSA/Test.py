@@ -4,6 +4,7 @@ from Mint import *
 from RSA import *
 from random import *
 from RSA_CRT import *
+from Attacks import *
 
 
 
@@ -73,7 +74,17 @@ class RSA_CRTTest(unittest.TestCase):
 		a = test.encrypt(n)
 		b = test.decrypt(a)
 		self.assertEqual(n,b)
-		
+
+class AttacksTest(unittest.TestCase):
+	""" Test case used for test the RSA's functions """
+	
+	def test_bellcore_attack(self):
+		""" Test the Bellcore attack """
+		print("test Bellcore attack ...")
+		victim = RSA_CRT()
+		cipher = victim.encrypt(randint(0,victim.n))
+		secret = Bellcore_attack(victim,cipher)
+		self.assertEqual(secret,victim.d)
 		
 
 if __name__ == '__main__' :
