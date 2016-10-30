@@ -3,6 +3,7 @@ from Arith import *
 from Mint import *
 from RSA import *
 from random import *
+from RSA_CRT import *
 
 
 
@@ -47,8 +48,27 @@ class RSATest(unittest.TestCase):
 
 	def test_encryption(self):
 		"""Test if the encryption works correctly"""
-		print("test encryption...")
+		print("test encryption (RSA) ...")
 		test = RSA()
+		n = randint(1,100000)
+		a = test.encrypt(n)
+		b = test.decrypt(a)
+		self.assertEqual(n,b)
+
+class RSA_CRTTest(unittest.TestCase):
+	""" Test case used for test the RSA's functions """
+
+	def test_keys_1(self):
+		""" Test if e * d = 1 mod phi"""
+		print("key test 2 ...")
+		test = RSA()
+		ed = (test.e * test.d)% test.phi
+		self.assertEqual( 1, ed)
+
+	def test_encryption(self):
+		"""Test if the encryption works correctly"""
+		print("test encryption (RSA-CRT) ...")
+		test = RSA_CRT()
 		n = randint(1,100000)
 		a = test.encrypt(n)
 		b = test.decrypt(a)
