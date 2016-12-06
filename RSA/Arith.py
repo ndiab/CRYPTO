@@ -46,7 +46,9 @@ def euclide_algorithm (a: int, b: int) -> dict :
 
 def CRT(a : Mint, b : Mint) -> Mint :
 	"""
-	Chiness Remainder Theorem 
+	Chiness Remainder Theorem
+	Entry  : two Mint (integers modulo n)
+	Return : one Mint
 	"""
 	r = euclide_algorithm(a.mod, b.mod)
 	u = r["U"]
@@ -54,6 +56,26 @@ def CRT(a : Mint, b : Mint) -> Mint :
 	x = (a.value * v * b.mod) + (b.value * u * a.mod)
 	m = Mint(x, a.mod * b.mod)
 	return m	
+
+def CRT_list(L : list) -> Mint :
+	"""
+	Chiness Remainder Theorem
+	Entry  : A list of Mint
+	Return : one Mint
+	"""
+	length = len(L)
+	while (length > 1) :
+		i = 0
+		while ((i*2)<length) :
+			if((i*2)+1 == length) :	# case of the last element of an odd list
+				L[i] = copy(L[i*2])
+			else :
+				L[i] = CRT(L[i*2],L[i*2+1])
+			i = i+1
+		length = (length >> 1) + length%2
+	
+	return L[0]
+		
 
 def Rabin_Miller(n : int) -> bool :
 	"""

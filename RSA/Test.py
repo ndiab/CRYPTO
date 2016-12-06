@@ -27,6 +27,20 @@ class ArithTest(unittest.TestCase):
 		x = CRT(a,b)
 		self.assertEqual((38,77),(x.value,x.mod))
 
+	def test_CRT_list(self):
+		"Test the multi Chiness Remainder Theorem"
+		print("CRT list test ... ")
+		a = Mint(3,7)
+		b = Mint(5,11)
+		c = Mint(8,13)
+		d = Mint(4,5)
+		e = Mint(14,17)
+		f = Mint(2,3)
+		g = Mint(1,19)
+		l = [a,b,c,d,e,f,g]
+		x = CRT_list(l)
+		self.assertEqual((2140484,4849845),(x.value, x.mod))
+
 class MintTest(unittest.TestCase):
 	""" Test case used for test the Mint's functions """
 
