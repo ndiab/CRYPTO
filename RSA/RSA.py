@@ -1,3 +1,10 @@
+'''
+Created on Oct 13, 2016
+@author: Nabil Diab
+    
+'''
+
+
 from random import *
 from copy import *
 from Arith import *

@@ -1,3 +1,10 @@
+'''
+Created on Oct 13, 2016
+@author: Nabil Diab
+    
+'''
+
+
 from math import *
 from random import *
 from copy import *
@@ -146,3 +153,98 @@ def generate_prime(mn : min, mx : int) -> int :
 		#	print("no prime number found in the selected interval")
 		n = randint(mn, mx)
 	return n
+
+
+
+def cont_frac(x : int, y : int) -> int:
+	"""
+	Convert a rational x/y fraction into
+	a list of partial quotients [a0, ... , an]
+	"""
+
+	L = []
+	a = x
+	b = y
+	r = log2(y) #Maximum partial quotients
+
+	while(a%b != 0 and r > 0 ):
+		q = a // b
+		a_t = a
+		a = b
+		b = a_t % b
+		L.append(q)
+		r = r-1
+
+	L.append(a // b)
+	if(r>0) :
+		L.append(b)
+
+	return L
+
+
+def frac_seq(L : list) -> list:
+	"""
+	Give the fractional sequence from a list of partial quotient
+	"""
+	
+	seq = []
+
+	for i in range(len(L)) :
+		l = L[0:i]
+		if len(l) == 0 :
+			continue
+		elif len(l) == 1 :
+			seq.insert(i,(L[0],1))
+		else :
+			seq.insert(i,compute_frac(l))
+
+	return seq
+
+
+def compute_frac(l : list) -> tuple:
+	"""
+	compute symbolically a sequence of fractions
+	"""	
+	i = len(l)-2
+
+	c = 1
+	a = l[i]
+	b = l[i+1]
+	
+
+	while ( i > 0 ) :
+		a = l[i]
+		a = a * b + c
+		c = b
+		b = a
+		i = i - 1
+	
+	a = l[0]
+	a = a * b + c
+
+	return (a,b)
+
+
+def isqrt(n):
+	'''
+	Calculates the integer square root
+	for arbitrary large nonnegative integers
+	'''
+	if n < 0:
+		raise ValueError('square root not defined for negative numbers')
+    
+	if n == 0:
+		return 0
+
+	a = int(log2(n)) + 1 // 2
+	b = int(log2(n)) + 1 % 2
+
+	x = 2**(a+b)
+	while True:
+		y = (x + n//x)//2
+		if y >= x:
+			return x
+		x = y
+
+
+

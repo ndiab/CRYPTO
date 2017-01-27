@@ -1,3 +1,9 @@
+'''
+Created on Oct 13, 2016
+@author: Nabil Diab
+    
+'''
+
 from copy import *
 
 

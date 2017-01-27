@@ -1,3 +1,9 @@
+'''
+Created on Oct 30, 2016
+@author: Nabil Diab
+    
+'''
+
 from RSA import *
 from random import randint
 
