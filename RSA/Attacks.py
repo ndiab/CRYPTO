@@ -96,7 +96,7 @@ def Wiener(N : int, e : int) -> int :
 
 def attack_exo_2(N : int, e : int, N_bis : int, e_bis : int) -> int :
 	d = Wiener (N,e)
-	nblb = int(log2(d)) + 1  # number of least significant bits k known
+	nblb = int(log2(d))  # number of least significant bits k known
 
 	offset = 1 << (nblb +1)	 # Offset for each iteration
 	max_iter = 1 << (276 - nblb)
@@ -104,8 +104,7 @@ def attack_exo_2(N : int, e : int, N_bis : int, e_bis : int) -> int :
 	print(max_iter)
 	print(offset)
 
-
-	d_bis = offset
+	d_bis = d + offset
 
 	m_ref = randint(10,1000)
 
