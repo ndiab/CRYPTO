@@ -246,5 +246,22 @@ def isqrt(n):
 			return x
 		x = y
 
+def find_invpow(x,n):
+	"""Finds the integer component of the n'th root of x,
+	an integer such that y ** n <= x < (y + 1) ** n.
+	"""
+	low = 1
+	high = 1 << 2024
+
+	while low < high:
+		mid = (low + high) // 2
+		if low < mid and mid**n < x:
+			low = mid
+		elif high > mid and mid**n > x:
+			high = mid
+		else:
+			return mid
+
+	return mid + 1
 
 

@@ -22,11 +22,11 @@ class RSA :
 	max_bound = (1 << 1025) -1    #2^1025 - 1
 	
 	def __init__(self):
-		self.p = 0
-		self.q = 0
+		self._p = 0
+		self._q = 0
 		self.e = 0
-		self.d = 0
-		self.phi = 0
+		self._d = 0
+		self._phi = 0
 		self.n = 0
 		self.generate_keys()
 		
@@ -37,26 +37,26 @@ class RSA :
 		"""
 		# step 1 : chose random primary numbers p and q
 		n = generate_prime(self.min_bound,self.max_bound)
-		self.p = copy(n)
+		self._p = copy(n)
 		n = generate_prime(self.min_bound,self.max_bound)
-		while(n == self.p):
+		while(n == self._p):
 			n = generate_prime(self.min_bound,self.max_bound)
-		self.q = copy(n)
+		self._q = copy(n)
 
 		#step 2 : compute n = pq
-		self.n = self.p * self.q
+		self.n = self._p * self._q
 
 		#step 3 : compute phi(n)
-		self.phi = (self.p - 1) * (self.q - 1)
+		self._phi = (self._p - 1) * (self._q - 1)
 
 		#step 4 : chose the exponent
-		n = randint(100,self.phi)
-		while (gcd(self.phi,n) != 1):
-			n = randint(100,self.phi)
+		n = randint(100,self._phi)
+		while (gcd(self._phi,n) != 1):
+			n = randint(100,self._phi)
 		self.e = copy(n)
 
 		#step 5 : compute d (private key)
-		self.d = euclide_algorithm(self.e, self.phi)["U"] % self.phi
+		self._d = euclide_algorithm(self.e, self._phi)["U"] % self._phi
 
 	def encrypt(self, message : int) -> int:
 		"""
@@ -75,9 +75,26 @@ class RSA :
 		Return : clear message (integer)
 		"""
 		c = Mint(cipher,self.n)
-		c.fast_exp(self.d)
+		c.fast_exp(self._d)
 		return c.value
+
+	def force_public_key(self, new_e : int) :
+		"""
+		modify the public key and adapt the private key to this one
+		useful for the broadcast Attack
+		Entry : the new public key
+		"""
 		
+		if (gcd(self._phi,new_e) != 1) :
+			return False
+		
+		self.e = copy(new_e)
+		self._d = euclide_algorithm(self.e, self._phi)["U"] % self._phi
+
+		return True
+
+	def is_private_key(self, key: int) -> bool:
+		return key == self._d
 
 
 

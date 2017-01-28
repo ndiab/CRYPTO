@@ -10,6 +10,7 @@ from RSA import *
 from random import *
 from RSA_CRT import *
 from math import *
+from User import *
 
 
 def Bellcore_attack(victim : RSA_CRT, cipher : int) -> int :
@@ -134,13 +135,34 @@ def attack_exo_2(N : int, e : int, N_bis : int, e_bis : int) -> int :
 	return 0
 
 
+def broadcast_attack(L : list) -> int :
+	"""
+	Perform the broadcast attack from a list of message
+	each message is represented as a tuple (c, N, e)
+	with : * c = cipher
+	       * N = modulus
+	       * e = public key
+	"""	
 
-N= 0x1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000143b7ef096124769b084359a72b000000000000000000000000000000000000000000000000000000000000000000000000000002ab354728c9c9e417c3a3017028b5f14ed6cb2a2abccfe41f4bcf
-e= 0x9f4f9e2c3634631d7ce5f6d92316acb180cfed06a759d840735e3f5c230f2f4f1822646d21ea6d523ca1fe48223a74dc2bd8d1b9d722ced486219b3a5f9e1812fc1eeaaa7d11699b576bbf87a2b2684d5555df984e355a4f4a3c392cec236847a2e97d4c6575292744a988f907fec624b9cf1379e145423155c6336992092bf
+	# 1 - Verify the broadcast attack conditions
+	pk = L[1][2]
+	S = []
+	assert  pk <= len(L), "Can't perform the broadcast attack with these conditions : too few ciphers"
+	for (c,N,e) in L :
+		assert pk == e, "Can't perform the broadcast attack with these conditions : the public keys are not the same"
+		S.append(Mint(c,N))
+	
+
+	# 2 - CRT between the messages
+	C = CRT_list(S)
+	x = C.value
+
+	
+	m = find_invpow(x,3)
 
 
-Nbis= 0x1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000143b7ef096124769b084359a72c620000000000000000000000000000000000000000000000000000000000000000000000000002ab354728c9c9e417c3a301a2bfb5958214c121a20a1bc3a60b5d
-ebis= 0xcab33aef8b29f93115458e31b7f14ff3efbdf91dfaa4e025dafe66913c8db9ab77e860536b79875327449e2c759a774d91c0f09595589613c804f4565dcb202e78559233b609d0a578e9a8029b255ef11179303c1335af7db80ea574488c4195eb259e9dd1b85a9a45eef8a541e4e03a2a4c6a87af63bfd7fb2fe9cf66060f7
+	return m
 
-attack_exo_2(N, e , Nbis , ebis)		
+
+	
 

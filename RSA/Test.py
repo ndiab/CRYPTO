@@ -11,6 +11,7 @@ from RSA import *
 from random import *
 from RSA_CRT import *
 from Attacks import *
+from User import *
 
 
 
@@ -60,12 +61,12 @@ class MintTest(unittest.TestCase):
 class RSATest(unittest.TestCase):
 	""" Test case used for test the RSA's functions """
 	
-	def test_keys_1(self):
-		""" Test if e * d = 1 mod phi"""
-		print("key test 1 ...")
-		test = RSA()
-		ed = (test.e * test.d)% test.phi
-		self.assertEqual( 1, ed)
+	#def test_keys_1(self):
+	#	""" Test if e * d = 1 mod phi"""
+	#	print("key test 1 ...")
+	#	test = RSA()
+	#	ed = (test.e * test.d)% test.phi
+	#	self.assertEqual( 1, ed)
 
 	def test_encryption(self):
 		"""Test if the encryption works correctly"""
@@ -79,12 +80,12 @@ class RSATest(unittest.TestCase):
 class RSA_CRTTest(unittest.TestCase):
 	""" Test case used for test the RSA's functions """
 
-	def test_keys_1(self):
-		""" Test if e * d = 1 mod phi"""
-		print("key test 2 ...")
-		test = RSA()
-		ed = (test.e * test.d)% test.phi
-		self.assertEqual( 1, ed)
+	#def test_keys_1(self):
+	#	""" Test if e * d = 1 mod phi"""
+	#	print("key test 2 ...")
+	#	test = RSA()
+	#	ed = (test.e * test.d)% test.phi
+	#	self.assertEqual( 1, ed)
 
 	def test_encryption(self):
 		"""Test if the encryption works correctly"""
@@ -104,7 +105,47 @@ class AttacksTest(unittest.TestCase):
 		victim = RSA_CRT()
 		cipher = victim.encrypt(randint(0,victim.n))
 		secret = Bellcore_attack(victim,cipher)
-		self.assertEqual(secret,victim.d)
+		self.assertEqual(True,victim.is_private_key(secret))
+
+	def test_broadcast_attacks(self):
+		""" test the broadcast attack """
+		print("test the broadcast attack")
+		u = User()
+		u.force_public_key(3)
+		s1 = copy(u)
+		m1 = (u.get_message(),u.rsa.n,u.rsa.e)
+		u.change_modulus()
+		s2 = copy(u)
+		m2 = (u.get_message(),u.rsa.n,u.rsa.e)
+		u.change_modulus()
+		s3 = copy(u)
+		m3 = (u.get_message(),u.rsa.n,u.rsa.e)
+
+		L = [m1,m2,m3]
+		m = broadcast_attack(L)
+		
+		self.assertEqual(True,u.verify_message(m))
+		
+
+		
+		
+
+class UserTest(unittest.TestCase):
+	""" Test case for the User Class """
+	
+	def test_user_encryption(self):
+		""" test the user class """
+		print("test the user class : encryption")
+		u = User()
+		self.assertEqual(u.verify_message(u.rsa.decrypt(u.get_message())),True)
+		
+	def test_user_new_pk(self):
+		""" test the user class """
+		print("test the user class : new public key")
+		u = User()
+		u.force_public_key(3)
+		self.assertEqual(u.rsa.e,3)
+		self.assertEqual(u.verify_message(u.rsa.decrypt(u.get_message())),True)
 		
 
 if __name__ == '__main__' :

@@ -27,16 +27,16 @@ class RSA_CRT(RSA):
 		Entry : cipher	(integer)
 		Return : clear message (integer)
 		"""
-		cp = Mint(cipher, self.p)
-		cq = Mint(cipher, self.q)
-		dp = self.d % (self.p - 1)
-		dq = self.d % (self.q - 1)
+		cp = Mint(cipher, self._p)
+		cq = Mint(cipher, self._q)
+		dp = self._d % (self._p - 1)
+		dq = self._d % (self._q - 1)
 		cp.fast_exp(dp)
 		cq.fast_exp(dq)
 		# Fault attack !
 		if(self.bellcore):
 			#We change the value of mp
-			n = randint(0,self.p)
+			n = randint(0,self._p)
 			cp.value = n
 		m = CRT(cp,cq)
 		return m.value
