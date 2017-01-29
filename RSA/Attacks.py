@@ -50,10 +50,10 @@ def Wiener(N : int, e : int) -> int :
 	if not, return 0
 	"""
 	
-	#1 - initiate the list of partial quotients
+	#1 - initialize the list of partial quotients
 	quot = cont_frac(e,N)
 	
-	#2 - initiate a list of continued fractions
+	#2 - initialize a list of continued fractions
 	seq = frac_seq(quot)
 
 	#check if d is actually the key
@@ -161,6 +161,7 @@ def broadcast_attack(L : list) -> int :
 
 
 	return m
+	
 
 
 	
