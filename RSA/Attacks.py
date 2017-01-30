@@ -5,7 +5,6 @@ Created on Oct 30, 2016
 '''
 
 from Arith import *
-from Mint import *
 from RSA import *
 from random import *
 from RSA_CRT import *

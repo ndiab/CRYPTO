@@ -8,7 +8,6 @@ Created on Oct 13, 2016
 from random import *
 from copy import *
 from Arith import *
-from Message import *
 
 class RSA :
 	"""
