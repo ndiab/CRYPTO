@@ -1,5 +1,4 @@
 from RSA import *
-from Message import *
 from random import *
 
 

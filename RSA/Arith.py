@@ -47,7 +47,7 @@ class Mint:
 		"""
 		self.value = self.value^-1
 		"""
-		self.value = euclide_algorithm(self.mod, self.value)["U"]
+		self.value = euclide_algorithm(self.value, self.mod)["U"]
 		self.refresh()
 
 #Tableau de petits premiers
@@ -70,8 +70,8 @@ def euclide_algorithm(a: int, b: int) -> dict :
 	Return : a dict ( "PGCD" , "U" , "V") 
 	where r is the remind and u and v are the the coefficients of the Bezout's relation
 	"""
-	r1 = min (a,b)
-	r2 = max (a,b)
+	r1 = a
+	r2 = b
 	u1 = 1
 	u2 = 0
 	v1 = 0
@@ -317,8 +317,7 @@ def BSGS(c : int, m : int, N : int) -> int :
 		* N : modulus
 	"""
 
-	a = find_invpow(N,2)
-	print("a = ", a)
+	a = find_invpow(N,2) + 1 
 
 	C = Mint(c,N)
 
@@ -334,9 +333,6 @@ def BSGS(c : int, m : int, N : int) -> int :
 	step = Mint(c, N)
 	step.fast_exp(a)
 	step.inv()
-	print("inverse de c = ", step.value)
-	print("c  = ", c)
-	print("step = ", step.value)
 
 	g = m
 
@@ -351,6 +347,7 @@ def BSGS(c : int, m : int, N : int) -> int :
 
 	return -1
 
+	
 	
 
 

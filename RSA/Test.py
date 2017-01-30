@@ -6,7 +6,6 @@ Created on Oct 13, 2016
 
 import unittest
 from Arith import *
-from Mint import *
 from RSA import *
 from random import *
 from RSA_CRT import *
@@ -47,6 +46,20 @@ class ArithTest(unittest.TestCase):
 		l = [a,b,c,d,e,f,g]
 		x = CRT_list(l)
 		self.assertEqual((2140484,4849845),(x.value, x.mod))
+
+	def test_BSGS(self):
+		""" test the baby Step Giant Step """
+		print("Baby Step Giant Step Test ...")
+		i = randint(1,len(prime_tab)-1)
+		j = randint(0,i-1)
+		N = prime_tab[i] #choose a prime number
+		e = prime_tab[j]
+		m = randint(0,N-1)
+		c = Mint(m,N)
+		c.fast_exp(e)
+		c.fast_exp(BSGS(c.value,m,N))
+		self.assertEqual(c.value,m)
+		
 
 class MintTest(unittest.TestCase):
 	""" Test case used for test the Mint's functions """
