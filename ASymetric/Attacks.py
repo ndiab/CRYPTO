@@ -47,6 +47,7 @@ def Wiener(N : int, e : int) -> int :
 	Wiener Attack
 	return the private key if it's vulnerable
 	if not, return 0
+	(need cont_frac, fraq_seq, isqrt)
 	"""
 	
 	#1 - initialize the list of partial quotients

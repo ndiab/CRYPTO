@@ -50,6 +50,9 @@ class Mint:
 		self.value = euclide_algorithm(self.value, self.mod)["U"]
 		self.refresh()
 
+	def to_string(self):
+		return str(self.value) + " mod " + str(self.mod)
+
 #Tableau de petits premiers
 prime_tab = [2,3,5,7,11,13,17,19,23,29,3137,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283,293,307,311,313,317,331,337,347,349,353,359,367,373,379,383,389,397,401,409,419,421,431,433,439,443,449,457,461,463,467,479,487,491,499,503,509,521,523,541,547,557,563,569,571,577,587,593,599,601,607,613,617,619,631,641,643,647,653,659,661,673,677,683,691,701,709,719,727,733,739,743,751,757,761,769,773,787,797,809,811,821,823,827,829,839,853,857,859,863,877,881,883,887,907,911,919,929,937,941,947,953,967,971,977,983,991,997,1009,1013,1019,1021,1031,1033,1039,1049,1051,1061,1063,1069,1087,1091,1093,1097,1103,1109,1117,1123,1129,1151,1153,1163,1171,1181,1187,1193,1201,1213,1217,1223]
 
@@ -90,6 +93,21 @@ def euclide_algorithm(a: int, b: int) -> dict :
 		v2 = vt - q * v2
 	
 	return { "PGCD":r1 , "U":u1 , "V":v1 }
+
+def mod_division(A : int, B : int, p : int) -> int:
+	"""
+	perform the modular division
+	Entry : * two integers A and B
+		* a modulus p
+	Return : A/B mod p
+	"""
+	a = Mint(A,p)
+	b = Mint(B,p)
+	
+	b.inv()
+
+	return (a.value * b.value) % p
+
 
 def CRT(a : Mint, b : Mint) -> Mint :
 	"""
@@ -216,8 +234,6 @@ def cont_frac(x : int, y : int) -> int:
 		r = r-1
 
 	L.append(a // b)
-	if(r>0) :
-		L.append(b)
 
 	return L
 
@@ -347,13 +363,85 @@ def BSGS(c : int, m : int, N : int) -> int :
 
 	return -1
 
+
+def test_key(e : int, d : int, N : int) -> bool :
+	"""
+	test if a triplet public key private key and modulus works
+	Entry : * e : public key
+		* d : private key
+		* N : modulus
+	"""
+
+	m = randint(2,N)
+	M = Mint(m,N)
+
+	M.fast_exp(e)
+	M.fast_exp(d)
+
+	_m = M.value
+
+	if m == _m :
+		print("SUCCESS")
+		return True
+
+	print("FAIL")
+	return False
 	
 	
+#
+# Source : https://github.com/Y0a0bon/crypto/blob/dev/util.py
+#
+def pollard_rho(n : int, x1 : int):
+	x = x1
+	y = pr_lambda(x) % n
+	p = gcd(y - x, n)
+	while(p == 1):
+		x = pr_lambda(x) % n
+		y = pr_lambda(pr_lambda(y)) % n
+		p = gcd(y - x, n)
+	if(p == n):
+		if(verbose != 0):
+			print("No solution found !")
+		return None
+	return p
 
 
+def pr_lambda(x : int) -> int:
+	return (x**2 + 1)
 
-
-
+#
+# Function applying Baby Step Giant Step algorithm
+#
+#def baby_giant_step(p : int, g : int):
+#	"""
+#	p : order
+#	g : generator
+#	"""
+#	m = math.ceil(math.sqrt(p))
+#	g_t = [0]*m
+#	h_t = [0]*m
+#	g_inv = 0
+#	for i in range(0, m):
+#		g_t[i] = fast_exp(g, i, p, verbose) % p
+#	if(verbose != 0):
+#		print("g ={0}".format(g_t))
+	# g^(-m) mod p = (g ^ (-1)) ^ 6 mod p :
+#	g_inv_m = fast_exp(mod_inv(g, p, verbose), m, p, verbose)
+#	if(verbose != 0):
+#		print("g ^ (-m) mod p = {0}^(-{1}) mod {2} = {3}".format(g, m, p, g_inv_m))
+#	j = ret = cont = 0
+#	while(j < m and cont == 0):
+#		h_t[j] = m * fast_exp(g_inv_m, j, p, verbose) % p
+#		if(verbose != 0):
+#			print("h[{0}] = {1}".format(j, h_t[j]))
+#			print("h is {0} and g is {1}".format(h_t, g_t))
+#		if(h_t[j] in g_t):
+#			ret = j * m + g_t.index(h_t[j]) # NON OPIMISE
+#			if(verbose != 0):
+#				print("Found it in g_t[{0}] which is {1} ".format(g_t.index(h_t[j]), h_t[j]))
+#			cont = 1
+#		j = j+1
+#²return ret
 
 
 
