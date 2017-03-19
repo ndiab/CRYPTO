@@ -6,8 +6,7 @@ Created on Oct 13, 2016
 
 
 from random import *
-from copy import *
-from Arith import *
+from Asymetric.Arith import *
 
 class RSA :
 	"""
@@ -36,11 +35,11 @@ class RSA :
 		"""
 		# step 1 : chose random primary numbers p and q
 		n = generate_prime(self.min_bound,self.max_bound)
-		self._p = copy(n)
+		self._p = n
 		n = generate_prime(self.min_bound,self.max_bound)
 		while(n == self._p):
 			n = generate_prime(self.min_bound,self.max_bound)
-		self._q = copy(n)
+		self._q = n
 
 		#step 2 : compute n = pq
 		self.n = self._p * self._q
@@ -52,7 +51,7 @@ class RSA :
 		n = randint(100,self._phi)
 		while (gcd(self._phi,n) != 1):
 			n = randint(100,self._phi)
-		self.e = copy(n)
+		self.e = n
 
 		#step 5 : compute d (private key)
 		self._d = euclide_algorithm(self.e, self._phi)["U"] % self._phi
@@ -87,7 +86,7 @@ class RSA :
 		if (gcd(self._phi,new_e) != 1) :
 			return False
 		
-		self.e = copy(new_e)
+		self.e = new_e
 		self._d = euclide_algorithm(self.e, self._phi)["U"] % self._phi
 
 		return True

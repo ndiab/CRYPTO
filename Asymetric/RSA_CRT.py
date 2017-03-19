@@ -4,7 +4,7 @@ Created on Oct 30, 2016
     
 '''
 
-from RSA import *
+from Asymetric.RSA import *
 from random import randint
 
 class RSA_CRT(RSA):
