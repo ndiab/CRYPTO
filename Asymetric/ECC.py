@@ -4,8 +4,6 @@ Created on Jan 30, 2017
     
 '''
 
-from Arith import *
-
 
 class Point:
 	

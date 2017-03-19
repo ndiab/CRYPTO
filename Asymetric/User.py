@@ -1,4 +1,4 @@
-from RSA import *
+from Asymetric import RSA
 from random import *
 
 
@@ -34,6 +34,6 @@ class User :
 		"""
 		Change all the keys of RSA except the public key
 		"""
-		e = copy(self.rsa.e)
+		e = self.rsa.e
 		self.rsa = RSA()
 		self.force_public_key(e)

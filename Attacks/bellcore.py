@@ -4,12 +4,9 @@ Created on Oct 30, 2016
     
 '''
 
-from Arith import *
-from RSA import *
+from Asymetric import Arith, RSA, RSA_CRT, User
 from random import *
-from RSA_CRT import *
 from math import *
-from User import *
 
 
 def Bellcore_attack(victim : RSA_CRT, cipher : int) -> int :

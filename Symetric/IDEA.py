@@ -1,4 +1,12 @@
+#!/usr/bin/python3.5
+#-*- coding : utf-8 -*-
 
+'''
+Created on Feb 03, 2017
+@author: Nabil Diab
+
+International Data Encryption Algorithm
+'''
 
 from random import randint
 from operator import xor

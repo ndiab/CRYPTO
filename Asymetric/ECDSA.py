@@ -6,7 +6,7 @@
 
 import os, sys
 import math, random
-from Arith import *
+from Asymetric.Arith import *
 import hashlib
 
 
