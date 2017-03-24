@@ -1,3 +1,13 @@
+'''
+Created on Mar 24, 2017
+@author: Nabil Diab
+    
+'''
+
+from Asymetric import RSA, RSA_CRT, User
+from Arithmetic.arith import *
+
+
 def broadcast_attack(L : list) -> int :
 	"""
 	Perform the broadcast attack from a list of message

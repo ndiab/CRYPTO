@@ -1,11 +1,22 @@
-
+'''
+Created on Oct 30, 2016
+@author: Nabil Diab
+    
+'''
 
 import unittest
 from Symetric import IDEA
+from Arithmetic import arith
 from Asymetric import *
 from Attacks import *
 
 
+
+
+
+##########################################################
+#		ASYMETRIC CONTENT TESTS			 #
+##########################################################
 
 class ArithTest(unittest.TestCase):
 	""" Test case used for test the Arithmetics functions """
@@ -64,6 +75,24 @@ class MintTest(unittest.TestCase):
 		m.fast_exp(37)
 		self.assertEqual( 113, m.value)
 
+
+class UserTest(unittest.TestCase):
+	""" Test case for the User Class """
+	
+	def test_user_encryption(self):
+		""" test the user class """
+		print("test the user class : encryption")
+		u = User()
+		self.assertEqual(u.verify_message(u.rsa.decrypt(u.get_message())),True)
+		
+	def test_user_new_pk(self):
+		""" test the user class """
+		print("test the user class : new public key")
+		u = User()
+		u.force_public_key(3)
+		self.assertEqual(u.rsa.e,3)
+		self.assertEqual(u.verify_message(u.rsa.decrypt(u.get_message())),True)
+
 class RSATest(unittest.TestCase):
 	""" Test case used for test the RSA's functions """
 	
@@ -102,6 +131,12 @@ class RSA_CRTTest(unittest.TestCase):
 		b = test.decrypt(a)
 		self.assertEqual(n,b)
 
+
+
+##########################################################
+#		ATTACKS CONTENT TESTS			 #
+##########################################################
+
 class AttacksTest(unittest.TestCase):
 	""" Test case used for test the RSA's functions """
 	
@@ -131,27 +166,6 @@ class AttacksTest(unittest.TestCase):
 		m = broadcast_attack(L)
 		
 		self.assertEqual(True,u.verify_message(m))
-		
-
-		
-		
-
-class UserTest(unittest.TestCase):
-	""" Test case for the User Class """
-	
-	def test_user_encryption(self):
-		""" test the user class """
-		print("test the user class : encryption")
-		u = User()
-		self.assertEqual(u.verify_message(u.rsa.decrypt(u.get_message())),True)
-		
-	def test_user_new_pk(self):
-		""" test the user class """
-		print("test the user class : new public key")
-		u = User()
-		u.force_public_key(3)
-		self.assertEqual(u.rsa.e,3)
-		self.assertEqual(u.verify_message(u.rsa.decrypt(u.get_message())),True)
 		
 
 if __name__ == '__main__' :

@@ -1,9 +1,17 @@
+'''
+Created on Mar 24, 2017
+@author: Nabil Diab
+    
+'''
+
+from Asymetric import RSA, RSA_CRT, User
+from Arithmetic import arith
+
 def Wiener(N : int, e : int) -> int :
 	"""
 	Wiener Attack
 	return the private key if it's vulnerable
 	if not, return 0
-	(need cont_frac, fraq_seq, isqrt)
 	"""
 	
 	#1 - initialize the list of partial quotients
