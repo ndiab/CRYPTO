@@ -11,7 +11,7 @@ This project contains the implemetation of some cryptosystems and artithmetic ob
   * ECC
 * Symetric
   * IDEA
-* Arithmetic
+* Arithmetic cryptosystems
   * extended euclide's algorithm
   * Chiness Remainder Theorem (CRT)
   * Continued fraction computation
@@ -33,7 +33,10 @@ This project contains the implemetation of some cryptosystems and artithmetic ob
 ### TEST
 
 For checking if the contents works correctly, run on the project's root the following command :
-'''
+''' {r, engine='bash', count_lines}
 python3 Test.py
 '''
+
+
+### AU
 
