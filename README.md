@@ -43,6 +43,6 @@ python3 Test.py
 
 
 ### Acknowledgment 
-*Maeva Benoit, Sebastien Coll and Benoit Le Caruyer de Beauvais for helping*
-*Guenael Renault who's taught the course*
+ * *Maeva Benoit, Sebastien Coll (@y0a0bon) and Benoit Le Caruyer de Beauvais for helping*
+ * *Guenael Renault who's taught the course*
 
