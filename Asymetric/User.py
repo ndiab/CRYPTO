@@ -1,3 +1,9 @@
+'''
+Created on Oct 30, 2016
+@author: Nabil Diab
+    
+'''
+
 from Asymetric import RSA
 from random import *
 
