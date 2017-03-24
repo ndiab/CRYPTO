@@ -33,9 +33,9 @@ This project contains the implemetation of some cryptosystems and artithmetic ob
 ### TEST
 
 For checking if the contents works correctly, run on the project's root the following command :
-''' {r, engine='bash', count_lines}
+```bash
 python3 Test.py
-'''
+```
 
 
 ### AU
