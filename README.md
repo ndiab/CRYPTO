@@ -38,5 +38,9 @@ python3 Test.py
 ```
 
 
-### AU
+### AUTHORS
+ * Nabil Diab
+
+
+#### Thanks for helping from Maeva Benoit, Sebastien Coll and Benoit Le Caruyer de Beauvais.
 
