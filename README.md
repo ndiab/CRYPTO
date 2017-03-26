@@ -9,9 +9,9 @@ This project contains the implemetation of some cryptosystems, artithmetic objec
   * RSA
   * RSA_CRT
   * ECC
-* Symetric
+* Symetric cryptosystems
   * IDEA
-* Arithmetic cryptosystems
+* Arithmetic objects
   * extended euclide's algorithm
   * Chiness Remainder Theorem (CRT)
   * Continued fraction computation
