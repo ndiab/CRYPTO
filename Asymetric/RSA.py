@@ -6,7 +6,7 @@ Created on Oct 13, 2016
 
 
 from random import *
-from Arithmetic.arith import *
+from Arithmetic import *
 
 class RSA :
 	"""
