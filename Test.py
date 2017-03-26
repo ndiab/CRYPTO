@@ -6,7 +6,7 @@ Created on Oct 30, 2016
 
 import unittest
 from Symetric import IDEA
-from Arithmetic import arith
+from Arithmetic import *
 from Asymetric import *
 from Attacks import *
 
