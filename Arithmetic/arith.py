@@ -322,46 +322,7 @@ def find_invpow(x,n):
 
 
 
-def BSGS(c : int, m : int, N : int) -> int :
-	"""
-	Baby Step Giant Step
-	Compute the discrete logarithm
-	return d such that c^d mod N = m mod N
-	Entry :
-		* c : cipher
-		* m : clear message
-		* N : modulus
-	"""
 
-	a = find_invpow(N,2) + 1 
-
-	C = Mint(c,N)
-
-	BS = {}
-	
-	#Baby Step
-	for i in range (a):
-		C.value = c
-		C.fast_exp(i)
-		BS[C.value] = i
-
-	# c ^-a
-	step = Mint(c, N)
-	step.fast_exp(a)
-	step.inv()
-
-	g = m
-
-	#Giant step
-	for i in range (a):
-		if g in BS.keys() :
-			return i * a + BS[g]
-		else :
-			g = (g * step.value) % N
-
-	print("BSGS doesn't work")
-
-	return -1
 
 
 def test_key(e : int, d : int, N : int) -> bool :
@@ -408,40 +369,6 @@ def pollard_rho(n : int, x1 : int):
 
 def pr_lambda(x : int) -> int:
 	return (x**2 + 1)
-
-#
-# Function applying Baby Step Giant Step algorithm
-#
-#def baby_giant_step(p : int, g : int):
-#	"""
-#	p : order
-#	g : generator
-#	"""
-#	m = math.ceil(math.sqrt(p))
-#	g_t = [0]*m
-#	h_t = [0]*m
-#	g_inv = 0
-#	for i in range(0, m):
-#		g_t[i] = fast_exp(g, i, p, verbose) % p
-#	if(verbose != 0):
-#		print("g ={0}".format(g_t))
-	# g^(-m) mod p = (g ^ (-1)) ^ 6 mod p :
-#	g_inv_m = fast_exp(mod_inv(g, p, verbose), m, p, verbose)
-#	if(verbose != 0):
-#		print("g ^ (-m) mod p = {0}^(-{1}) mod {2} = {3}".format(g, m, p, g_inv_m))
-#	j = ret = cont = 0
-#	while(j < m and cont == 0):
-#		h_t[j] = m * fast_exp(g_inv_m, j, p, verbose) % p
-#		if(verbose != 0):
-#			print("h[{0}] = {1}".format(j, h_t[j]))
-#			print("h is {0} and g is {1}".format(h_t, g_t))
-#		if(h_t[j] in g_t):
-#			ret = j * m + g_t.index(h_t[j]) # NON OPIMISE
-#			if(verbose != 0):
-#				print("Found it in g_t[{0}] which is {1} ".format(g_t.index(h_t[j]), h_t[j]))
-#			cont = 1
-#		j = j+1
-#²return ret
 
 
 

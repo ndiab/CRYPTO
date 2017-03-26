@@ -23,7 +23,7 @@ class ArithTest(unittest.TestCase):
 	
 	def test_euclide_algorithm(self):
 		""" Test if the euclide_algorithm working """
-		print("euclide test ...")
+		print("euclide ...")
 		a = 654987452
 		b = 165496
 		res = euclide_algorithm(a,b)
@@ -31,7 +31,7 @@ class ArithTest(unittest.TestCase):
 
 	def test_CRT(self):
 		"""Test the Chiness Remainder Theorem"""
-		print("CRT test ... ")
+		print("CRT ... ")
 		a = Mint(3,7)
 		b = Mint(5,11)
 		x = CRT(a,b)
@@ -39,7 +39,7 @@ class ArithTest(unittest.TestCase):
 
 	def test_CRT_list(self):
 		"Test the multi Chiness Remainder Theorem"
-		print("CRT list test ... ")
+		print("CRT list ... ")
 		a = Mint(3,7)
 		b = Mint(5,11)
 		c = Mint(8,13)
@@ -50,19 +50,6 @@ class ArithTest(unittest.TestCase):
 		l = [a,b,c,d,e,f,g]
 		x = CRT_list(l)
 		self.assertEqual((2140484,4849845),(x.value, x.mod))
-
-	def test_BSGS(self):
-		""" test the baby Step Giant Step """
-		print("Baby Step Giant Step Test ...")
-		i = randint(1,len(prime_tab)-1)
-		j = randint(0,i-1)
-		N = prime_tab[i] #choose a prime number
-		e = prime_tab[j]
-		m = randint(0,N-1)
-		c = Mint(m,N)
-		c.fast_exp(e)
-		c.fast_exp(BSGS(c.value,m,N))
-		self.assertEqual(c.value,m)
 		
 
 class MintTest(unittest.TestCase):
@@ -70,7 +57,7 @@ class MintTest(unittest.TestCase):
 
 	def test_mint_fast_exp(self):
 		""" Test the fast exponentiation of a mint """
-		print("Fast exponentiation test ...")
+		print("Fast exponentiation ...")
 		m = Mint(41,527)
 		m.fast_exp(37)
 		self.assertEqual( 113, m.value)
@@ -142,7 +129,7 @@ class AttacksTest(unittest.TestCase):
 	
 	def test_bellcore_attack(self):
 		""" Test the Bellcore attack """
-		print("test Bellcore attack ...")
+		print("Bellcore attack ...")
 		victim = RSA_CRT()
 		cipher = victim.encrypt(randint(0,victim.n))
 		secret = Bellcore_attack(victim,cipher)
@@ -150,7 +137,7 @@ class AttacksTest(unittest.TestCase):
 
 	def test_broadcast_attacks(self):
 		""" test the broadcast attack """
-		print("test the broadcast attack")
+		print("Broadcast attack ...")
 		u = User()
 		u.force_public_key(3)
 		s1 = copy(u)
@@ -167,6 +154,19 @@ class AttacksTest(unittest.TestCase):
 		
 		self.assertEqual(True,u.verify_message(m))
 		
+	def test_bsgs(self):
+		""" test the baby Step Giant Step """
+		print("Baby Step Giant Step ...")
+		i = randint(1,len(prime_tab)-1)
+		j = randint(0,i-1)
+		N = prime_tab[i] #choose a prime number
+		e = prime_tab[j]
+		m = randint(0,N-1)
+		c = Mint(m,N)
+		c.fast_exp(e)
+		c.fast_exp(bsgs(c.value,m,N))
+		self.assertEqual(c.value,m)
+
 
 if __name__ == '__main__' :
 		unittest.main()
