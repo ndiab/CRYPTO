@@ -23,11 +23,11 @@ This project contains the implemetation of some cryptosystems, artithmetic objec
     * prime number generation
       * Rabin Miller algorithm
     * Square root for large numbers
-  * Baby Step Giant Step
 * Attacks
   * Bellcore - RSA_CRT  (Fault Attack)
   * Broadcast - RSA 
   * Wiener    - RSA
+  * Baby Step Giant Step
 
 
 ### TEST
@@ -39,7 +39,7 @@ python3 Test.py
 
 
 ### AUTHORS
- * Nabil Diab
+ * Nabil Diab - nabil.diab59@gmail.com
 
 
 ### Acknowledgment 
