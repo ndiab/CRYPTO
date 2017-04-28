@@ -4,7 +4,6 @@ Created on Mar 24, 2017
     
 '''
 
-from Asymetric import RSA, RSA_CRT, User
 from Arithmetic import *
 
 def Wiener(N : int, e : int) -> int :

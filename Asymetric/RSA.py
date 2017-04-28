@@ -16,8 +16,8 @@ class RSA :
 	"""	
 
 	# define the bounds of the primary numbers generation  (1024 bits each)
-	min_bound = 1 << 1024    #2^1024	 	
-	max_bound = (1 << 1025) -1    #2^1025 - 1
+	min_bound = 1 << 1023    #2^1024	 	
+	max_bound = (1 << 1024) -1    #2^1025 - 1
 	
 	def __init__(self):
 		self._p = 0
