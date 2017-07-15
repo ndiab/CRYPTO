@@ -9,6 +9,7 @@ from Symetric import IDEA
 from Arithmetic import *
 from Asymetric import *
 from Attacks import *
+from Encoding import *
 
 
 
@@ -167,6 +168,28 @@ class AttacksTest(unittest.TestCase):
 		c.fast_exp(bsgs(c.value,m,N))
 		self.assertEqual(c.value,m)
 
+##########################################################
+#		Encoding CONTENT TESTS			 #
+##########################################################
+
+class EncodingTest(unittest.TestCase):
+	""" Test case used for test the RSA's functions """
+
+	def test_pkcs1_128(self):
+		print("PKCS1 ...")
+		message = hex(randint(1,1<<50))[2:]
+		encoded = encode(message,128,'pkcs1')
+		print("encoded = ", hex(encoded))
+		unencoded = decode(encoded,'pkcs1')
+		self.assertEqual(message,unencoded)
+
+	def test_pkcs1_2048(self):
+		print("PKCS1 ...")
+		message = hex(randint(1, 1<<1500))[2:]
+		encoded = encode(message,2048,'pkcs1')
+		print("encoded = ", hex(encoded))
+		unencoded = decode(encoded,'pkcs1')
+		self.assertEqual(message,unencoded)
 
 if __name__ == '__main__' :
 		unittest.main()
