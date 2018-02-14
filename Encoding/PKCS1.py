@@ -3,57 +3,84 @@
 
 
 '''
-Created on July 13, 2017
+Created on July 09, 2017
 @author: Nabil Diab
 
-PKCS1 padding
+Convertions of strings format to int blocks
 '''
 
+
+from Encoding.PKCS1 import *
 import math
 import binascii
 
-def PKCS1(message : int, size_block : int) -> int:
+def encode(message : str, size_block=256, pad_option='pkcs1') -> int:
 	"""
-	PKCS1 padding function
-	the format of this padding is :
+	Encoding function
+	encode utf-8 strings to an hexadecimal blockpython
 	
-	0x02 | 0x00 | [0xFF...0xFF] | 0x00 | [message]
-	"""
-	# compute the length in bytes of the message
-	length = math.ceil(math.ceil(math.log2(message-1)) / 8)
-
-	template = "0200"
-	
-	# generate a template 0xFFFFF.....FF of size_block bytes
-	for i in range(size_block-2):
-		template = template + 'FF'
-	template = int(template,16)
-
-	# Add the 00 of the end of the padding to the template
-	for i in range(length+1) :
-		template = template ^ (0xFF << i*8)
-
-	# add the padding to the original message
-	message = message | template
-	
-	return message
-	
-
-def unpad_PKCS1(message : int, size_block : int) -> int:
-	"""
-	PKCS1 unpadding function
+	Entries : 
+		- message	: the string to encode
+		- size_block	: the size of the output blocks (in bits)
+		- pad_option	: the padding format (for now, only PKCS1 is available)
 	"""
 
-	pts = 0xff << (size_block - 24)
+	#convert size_block bit to byte
+	bytes_block = size_block//8
 
-	while (pts & message != 0):
-		pts = pts >> 8
-	
-	a = ~pts & ((1 << size_block) - 1)
+	message = bytes(message,'utf-8')
 
-	message = message & (~pts & ((1 << math.ceil(math.log2(pts))) - 1) )
+	message = int(binascii.hexlify(message),16)
+
+	# verify that the message length is not too large for the block size
+	if ((math.ceil(math.log2(message))) > (size_block - 24)) :
+		print("the given message is too large for one block, exited")
+		return 1
+
+	message = padding(message, bytes_block, pad_option)
 
 	return message
 
+def decode(message : int, pad_option='pkcs1') -> str :
+	
+	size_block = math.ceil(math.ceil(math.log2(message))/8)*8
+	
+	message = unpadding(message, size_block, pad_option)
+
+	message = binascii.unhexlify(hex(message)[2:])
+
+	return str(message)[2:-1]
 
 
+def padding(message : int, size_block : int, pad_opt : str) -> int :
+	"""
+	Launch the padding choosen.
+	"""
+	pad_opt = pad_opt.upper()
+
+	opt_available = {"PKCS1" : PKCS1} #add the new padding options here
+
+	if pad_opt not in opt_available :
+		print("CRYPTO Error : ", pad_opt,"is not on the padding options, please choose one of these : ")
+		for e in opt_available :
+			print("\t\t* ",e)
+		return -1
+
+	return opt_available[pad_opt](message, size_block)
+
+
+def unpadding(message : int, size_block, pad_opt : int) -> int :
+	"""
+	Launch the unpadding 
+	"""
+	pad_opt = pad_opt.upper()
+
+	opt_available = {"PKCS1" : unpad_PKCS1} #add the new padding options here
+
+	if pad_opt not in opt_available :
+		print("CRYPTO Error : ", pad_opt,"is not on the padding options, please choose one of these : ")
+		for e in opt_available :
+			print("\t\t* ",e)
+		return -1
+
+	return opt_available[pad_opt](message, size_block)
