@@ -6,7 +6,7 @@
 Created on July 09, 2017
 @author: Nabil Diab
 
-Convertions strings to int blocks
+Convertions of strings format to int blocks
 '''
 
 
@@ -14,33 +14,34 @@ from Encoding.PKCS1 import *
 import math
 import binascii
 
-def encode(message : str, size_block : int, pad_option : str) -> int:
+def encode(message : str, size_block=256, pad_option='pkcs1') -> int:
 	"""
 	Encoding function
-	encode utf-8 strings to an hexadecimal block
+	encode utf-8 strings to an hexadecimal blockpython
 	
 	Entries : 
 		- message	: the string to encode
 		- size_block	: the size of the output blocks (in bits)
 		- pad_option	: the padding format (for now, only PKCS1 is available)
-
-	For the moment, only one block can be generated from this function. Then only strings who can be 		
-	represented by a hex block smaller than the size_block can be represented.
-	More padding options will be available in the future.
 	"""
 
 	#convert size_block bit to byte
-	size_block = size_block//8
+	bytes_block = size_block//8
 
 	message = bytes(message,'utf-8')
 
 	message = int(binascii.hexlify(message),16)
 
-	message = padding(message, size_block, pad_option)
+	# verify that the message length is not too large for the block size
+	if ((math.ceil(math.log2(message))) > (size_block - 24)) :
+		print("the given message is too large for one block, exited")
+		return 1
+
+	message = padding(message, bytes_block, pad_option)
 
 	return message
 
-def decode(message : int, pad_option : str) -> str :
+def decode(message : int, pad_option='pkcs1') -> str :
 	
 	size_block = math.ceil(math.ceil(math.log2(message))/8)*8
 	
@@ -83,7 +84,3 @@ def unpadding(message : int, size_block, pad_opt : int) -> int :
 		return -1
 
 	return opt_available[pad_opt](message, size_block)
-
-
-
-
