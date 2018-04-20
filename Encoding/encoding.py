@@ -14,7 +14,9 @@ from Encoding.PKCS1 import *
 import math
 import binascii
 
-def encode(message : str, size_block=256, pad_option='pkcs1') -> int:
+opt_available = {"PKCS1" : unpad_PKCS1} #add the new padding options here
+
+def encode(message , size_block=256, pad_option='pkcs1') -> int:
 	"""
 	Encoding function
 	encode utf-8 strings to an hexadecimal blockpython
@@ -25,10 +27,11 @@ def encode(message : str, size_block=256, pad_option='pkcs1') -> int:
 		- pad_option	: the padding format (for now, only PKCS1 is available)
 	"""
 
+	if(type(message) == str):
+		message = bytes(message,'utf-8')
+
 	#convert size_block bit to byte
 	bytes_block = size_block//8
-
-	message = bytes(message,'utf-8')
 
 	message = int(binascii.hexlify(message),16)
 
@@ -69,13 +72,11 @@ def padding(message : int, size_block : int, pad_opt : str) -> int :
 	return opt_available[pad_opt](message, size_block)
 
 
-def unpadding(message : int, size_block, pad_opt : int) -> int :
+def unpadding(message : int, size_block : int, pad_opt : int) -> int :
 	"""
 	Launch the unpadding 
 	"""
 	pad_opt = pad_opt.upper()
-
-	opt_available = {"PKCS1" : unpad_PKCS1} #add the new padding options here
 
 	if pad_opt not in opt_available :
 		print("CRYPTO Error : ", pad_opt,"is not on the padding options, please choose one of these : ")
